@@ -9,7 +9,7 @@ package no.uio.medisin.bag.utilities.blastjsonparser;
  *
  * @author simonray
  */
-public class Params {
+public class BLASTParams {
     private final String                                query_id                =  "";
     private final String                                expect                  =  "";
     private final String                                sc_match                =  "";
@@ -19,6 +19,28 @@ public class Params {
     private final String                                entrez_query            =  "";
     private final String                                gap_extend              =  "";
 
+    
+    
+    /**
+     * Stringify this instance
+     * 
+     * @return 
+     */
+    @Override
+    public String toString(){
+        
+        return 
+        "expect:\t" + this.getExpect() 
+          + "sc_match:\t" +  this.getSc_match()
+          + "sc_mismatch" + this.getSc_mismatch()
+          + "gap_open"  + this.getGap_open()
+          + "gap_extend" + this.getGap_extend()
+          + "filter" + this.getFilter()
+          + "entrez_query" + this.getEntrez_query();
+        
+    }
+    
+    
     /**
      * @return the query_id
      */

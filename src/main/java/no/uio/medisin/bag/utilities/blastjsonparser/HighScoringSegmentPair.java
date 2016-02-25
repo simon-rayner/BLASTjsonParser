@@ -11,26 +11,46 @@ package no.uio.medisin.bag.utilities.blastjsonparser;
  */
 public class HighScoringSegmentPair {
     
-    private final int        num              =  1;
-    private final double     bitScore         =  38.1576;
-    private final int        score            = 19;
-    private final double     evalue           = 2.43839;
-    private final int        identity         = 19;
-    private final int        query_from       = 1;
-    private final int        query_to         = 19;
-    private final String     query_strand     = "Plus";
-    private final int        hit_from         = 1533733;
-    private final int        hit_to           = 1533751;
-    private final String     hit_strand       = "Plus";
-    private final int        align_len        = 19;
+    private final int        num              =  0;
+    private final double     bit_score        =  0.0;
+    private final int        score            = 0;
+    private final double     evalue           = 0.0;
+    private final int        identity         = 0;
+    private final int        query_from       = 0;
+    private final int        query_to         = 0;
+    private final String     query_strand     = "";
+    private final int        hit_from         = 0;
+    private final int        hit_to           = 0;
+    private final String     hit_strand       = "";
+    private final int        align_len        = 0;
     private final int        gaps             = 0;
-    private final String     qseq             = "GTTGGGCGGATTAGTCGCA";
-    private final String     hseq             = "GTTGGGCGGATTAGTCGCA";
-    private final String     midline          = "|||||||||||||||||||";
+    private final String     qseq             = "";
+    private final String     hseq             = "";
+    private final String     midline          = "";
 
     
     
-    
+    @Override
+    public String toString(){
+        return
+                  "num" + this.getNum()
+                    + "bit_score" + this.getBit_Score()
+                    + "score" + this.getScore()
+                    + "evalue" + this.getEvalue()
+                    + "identity" + this.getIdentity()
+                    + "query_from" + this.getQuery_from()
+                    + "query_to" + this.getQuery_to()
+                    + "query_strand" + this.getQuery_strand()
+                    + "hit_from" + this.getHit_from()
+                    + "hit_to" + this.getHit_to()
+                    + "hit_strand" + this.getHit_strand()
+                    + "align_len" + this.getAlign_len()
+                    + "gaps" + this.getGaps()
+                    + "qseq" + this.getQseq()
+                    + "hseq" + this.getHseq()
+                    + "midline" +  this.getMidline();
+                }
+  
     
     
     
@@ -44,8 +64,8 @@ public class HighScoringSegmentPair {
     /**
      * @return the bitScore
      */
-    public double getBitScore() {
-        return bitScore;
+    public double getBit_Score() {
+        return bit_score;
     }
 
     /**

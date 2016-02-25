@@ -16,4 +16,11 @@ public class BlastOutput2 {
     public BlastOutput2(){
         report          = new Report();
     }
+
+    /**
+     * @return the report
+     */
+    public Report getReport() {
+        return report;
+    }
 }

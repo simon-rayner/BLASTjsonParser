@@ -13,17 +13,20 @@ import java.util.ArrayList;
  */
 public class Hit {
     
-    private final String                                num                  =  "";
-    private final Description                           description          ;
-    private final int                                   length               =  0;
+    private final String                                num                 =  "";
+    private final ArrayList<Description>                description;
+    private final int                                   len                 =  0;
     private final ArrayList<HighScoringSegmentPair>     hsps;
 
     
     public Hit(){
-        description = new Description();
+        description = new ArrayList<>();
         hsps = new ArrayList<>();
     }    
 
+    
+    
+    
     /**
      * @return the num
      */
@@ -34,15 +37,15 @@ public class Hit {
     /**
      * @return the description
      */
-    public Description getDescription() {
+    public ArrayList<Description> getDescription() {
         return description;
     }
 
     /**
      * @return the length
      */
-    public int getLength() {
-        return length;
+    public int getLen() {
+        return len;
     }
 
     /**

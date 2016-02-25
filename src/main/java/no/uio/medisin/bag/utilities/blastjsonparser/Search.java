@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public class Search {
     private final String                                query_id             =  "";
     private final String                                query_title          =  "";
-    private final int                                   query_length         =  0;
+    private final int                                   query_len         =  0;
     private final String                                num                  =  "";
     private final ArrayList<Hit>                        hits;
     private final Stat                                  stat;
@@ -41,8 +41,8 @@ public class Search {
     /**
      * @return the query_length
      */
-    public int getQuery_length() {
-        return query_length;
+    public int getQuery_len() {
+        return query_len;
     }
 
     /**

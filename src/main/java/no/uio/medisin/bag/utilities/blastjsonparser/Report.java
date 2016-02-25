@@ -15,14 +15,55 @@ public class Report {
     private final String                                reference               =  "";
     
     private final SearchTarget                          search_target;
-    private final Params                                params;
+    private final BLASTParams                                params;
     private final Results                               results;
-    private final String                                gap_extend              =  "";
     
     
     public Report(){
         search_target   = new SearchTarget();
-        params          = new Params();
+        params          = new BLASTParams();
         results         = new Results();
+    }
+
+    /**
+     * @return the version
+     */
+    public String getVersion() {
+        return version;
+    }
+
+    /**
+     * @return the reference
+     */
+    public String getReference() {
+        return reference;
+    }
+
+    /**
+     * @return the search_target
+     */
+    public SearchTarget getSearch_target() {
+        return search_target;
+    }
+
+    /**
+     * @return the program
+     */
+    public String getProgram() {
+        return program;
+    }
+
+    /**
+     * @return the params
+     */
+    public BLASTParams getParams() {
+        return params;
+    }
+
+    /**
+     * @return the results
+     */
+    public Results getResults() {
+        return results;
     }
 }

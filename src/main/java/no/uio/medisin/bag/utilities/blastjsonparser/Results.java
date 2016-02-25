@@ -12,11 +12,12 @@ import java.util.ArrayList;
  * @author simonray
  */
 public class Results {
-    private final String                                num                  =  "";
-    private final ArrayList<Search>                     searches;
- 
+//    private final String                                num                  =  "";
+//    private final ArrayList<Search>                     searches;
+    private Search search;
     
     public Results(){
-        searches = new ArrayList();
+//        searches = new ArrayList();
+        search = new Search();
     }
 }
