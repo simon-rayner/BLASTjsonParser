@@ -10,33 +10,36 @@ package no.uio.medisin.bag.utilities.blastjsonparser;
  * @author simonray
  */
 public class BLASTParams {
-    private final String                                query_id                =  "";
-    private final String                                expect                  =  "";
-    private final String                                sc_match                =  "";
-    private final String                                sc_mismatch             =  "";
-    private final String                                gap_open                =  "";
-    private final String                                filter                  =  "";
-    private final String                                entrez_query            =  "";
-    private final String                                gap_extend              =  "";
+    private String                                query_id                =  "";
+    private String                                expect                  =  "";
+    private String                                sc_match                =  "";
+    private String                                sc_mismatch             =  "";
+    private String                                gap_open                =  "";
+    private String                                filter                  =  "";
+    private String                                entrez_query            =  "";
+    private String                                gap_extend              =  "";
 
+    
+    
     
     
     /**
      * Stringify this instance
      * 
      * @return 
+     * 
      */
     @Override
     public String toString(){
         
         return 
         "expect:\t" + this.getExpect() 
-          + "sc_match:\t" +  this.getSc_match()
-          + "sc_mismatch" + this.getSc_mismatch()
-          + "gap_open"  + this.getGap_open()
-          + "gap_extend" + this.getGap_extend()
-          + "filter" + this.getFilter()
-          + "entrez_query" + this.getEntrez_query();
+          + "sc_match    :\t" +  this.getSc_match() + "\n"
+          + "sc_mismatch :\t" + this.getSc_mismatch() + "\n"
+          + "gap_open    :\t"  + this.getGap_open() + "\n"
+          + "gap_extend  :\t" + this.getGap_extend() + "\n"
+          + "filter      :\t" + this.getFilter() + "\n"
+          + "entrez_query:\t" + this.getEntrez_query(); 
         
     }
     

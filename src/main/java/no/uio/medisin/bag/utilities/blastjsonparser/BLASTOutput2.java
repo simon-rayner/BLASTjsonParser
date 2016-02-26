@@ -9,18 +9,56 @@ package no.uio.medisin.bag.utilities.blastjsonparser;
  *
  * @author simonray
  */
-public class BlastOutput2 {
-    private final Report                                report;
-    private final String                                db                      =  "";
+public class BLASTOutput2 {
+    private BLASTReport                           report;
+    private String                                db                      =  "";
     
-    public BlastOutput2(){
-        report          = new Report();
+    public BLASTOutput2(){
+        report          = new BLASTReport();
     }
 
+    
+    /**
+     * Filter hits based on queryLen and alignLen
+     * 
+     * @param queryL
+     * @param alignL 
+     * @return boolean
+     */
+    public Boolean filter(int queryL, int alignL){
+        return this.getReport().filterHits(queryL, alignL);
+    }
+
+    
+    /**
+     * filter by query len and align len and report what passes
+     * 
+     * @param queryL
+     * @param alignL
+     * @return 
+     * 
+     */
+    public String filterAndReport(int queryL, int alignL){
+        return this.getReport().filterAndReport(queryL, alignL);
+    }
+    
     /**
      * @return the report
      */
-    public Report getReport() {
+    public BLASTReport getReport() {
         return report;
+    }
+    
+    
+    
+    
+    /**
+     * Stringify this instance
+     * 
+     * @return 
+     */
+    @Override
+    public String toString(){
+        return "report:\t" + report.toString() + "\n";
     }
 }

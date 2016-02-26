@@ -5,19 +5,59 @@
  */
 package no.uio.medisin.bag.utilities.blastjsonparser;
 
-import java.util.ArrayList;
 
 /**
  *
  * @author simonray
  */
-public class Results {
-//    private final String                                num                  =  "";
-//    private final ArrayList<Search>                     searches;
-    private Search search;
+public class BLASTResults {
+
+    private BLASTSearchParameters search;
     
-    public Results(){
-//        searches = new ArrayList();
-        search = new Search();
+    public BLASTResults(){
+        search = new BLASTSearchParameters();
+    }
+    
+    
+    
+    
+    /**
+     * Filter hits based on queryLen and alignLen
+     * 
+     * @param queryL
+     * @param alignL 
+     * @return boolean
+     * 
+     */
+    public Boolean filter(int queryL, int alignL){       
+        return search.getQuery_len() >= queryL;
+    }
+    
+    
+    
+    /**
+     * filter search result by query Len. If the length is too short then skip
+     * 
+     * @param queryL
+     * @param alignL
+     * @return String
+     * 
+     */
+    public String filterAndReport(int queryL, int alignL){
+        if(search.getQuery_len() >= queryL){
+            return search.getQuery_title() + "\t" 
+                    + search.filterAndReport(queryL, alignL);
+        }
+        return search.getQuery_title() + "\t" 
+                + "query_len = " + search.getQuery_len() 
+                + "(<" + queryL + ") skipping" + "\n";
+    }
+    
+
+    
+    
+    @Override
+    public String toString(){
+        return search.toString();
     }
 }

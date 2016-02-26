@@ -9,15 +9,33 @@ package no.uio.medisin.bag.utilities.blastjsonparser;
  *
  * @author simonray
  */
-public class Stat {
-    private final int                                   db_num               =  0;
-    private final int                                   db_len               =  0;
-    private final int                                   hsp_len              =  0;
-    private final int                                   eff_space            =  0;
-    private final double                                kappa                =  0.0;
-    private final double                                lambda               =  0.0;
-    private final double                                entropy              =  0.0;
+public class BLASTStats {
+    private int                                   db_num               =  0;
+    private int                                   db_len               =  0;
+    private int                                   hsp_len              =  0;
+    private int                                   eff_space            =  0;
+    private double                                kappa                =  0.0;
+    private double                                lambda               =  0.0;
+    private double                                entropy              =  0.0;
 
+    
+    
+    /**
+     * Stringify this instance
+     * 
+     * @return 
+     */
+    @Override
+    public String toString(){
+        return 
+                  "dbNum    :\t" + this.getDb_num() + "\n"
+                + "dbLen    :\t" + this.getDb_len() + "\n"
+                + "hspLen   :\t" + this.getHsp_len() + "\n"
+                + "effSpace :\t" + this.getEff_space() + "\n"
+                + "kappa    :\t" + this.getKappa() + "\n"
+                + "lamba    :\t" + this.getLambda() + "\n"
+                + "entropy  :\t" + this.getEntropy();
+    }
     /**
      * @return the db_num
      */

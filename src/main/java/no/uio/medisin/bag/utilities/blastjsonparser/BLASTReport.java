@@ -9,22 +9,75 @@ package no.uio.medisin.bag.utilities.blastjsonparser;
  *
  * @author simonray
  */
-public class Report {
-    private final String                                program                 =  "";
-    private final String                                version                 =  "";
-    private final String                                reference               =  "";
+public class BLASTReport {
+    private  String                                program                 =  "";
+    private  String                                version                 =  "";
+    private  String                                reference               =  "";
     
-    private final SearchTarget                          search_target;
-    private final BLASTParams                                params;
-    private final Results                               results;
+    private  SearchTarget                          search_target;
+    private  BLASTParams                           params;
+    private  BLASTResults                          results;
     
     
-    public Report(){
+    public BLASTReport(){
         search_target   = new SearchTarget();
         params          = new BLASTParams();
-        results         = new Results();
+        results         = new BLASTResults();
     }
 
+    
+    
+    
+    
+    /**
+     * Filter hits based on queryLen and alignLen
+     * 
+     * @param queryL
+     * @param alignL 
+     * @return Boolean
+     * 
+     */
+    public Boolean filterHits(int queryL, int alignL){
+        return this.getResults().filter(queryL, alignL);
+    }
+    
+    
+    
+    
+    /**
+     * filter search result by query Len. If the length is too short then skip
+     * 
+     * @param queryL
+     * @param alignL
+     * @return String
+     * 
+     */
+    public String filterAndReport(int queryL, int alignL){
+        return this.getResults().filterAndReport(queryL, alignL);
+    }
+    
+    
+    /**
+     * Stringify this instance
+     * 
+     * @return 
+     */
+    @Override
+    public String toString(){
+        
+      String reportString 
+              = "program:  \t" + program + "\n"
+              + "version:  \t" + version + "\n"
+              + "reference:\t" + reference + "\n";
+      
+      reportString = reportString.concat(params.toString() + "\n");
+      
+      reportString = reportString.concat(results.toString() + "\n");
+      
+      
+      return reportString;
+        
+    }
     /**
      * @return the version
      */
@@ -63,7 +116,7 @@ public class Report {
     /**
      * @return the results
      */
-    public Results getResults() {
+    public BLASTResults getResults() {
         return results;
     }
 }

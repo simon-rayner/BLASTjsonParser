@@ -9,17 +9,32 @@ package no.uio.medisin.bag.utilities.blastjsonparser;
  *
  * @author simonray
  */
-public class BlastResult {
-    private final BlastOutput2                          BlastOutput2;
+public class BLASTResult {
+    private BLASTOutput2                          BlastOutput2;
     
-    public BlastResult(){
-        BlastOutput2          = new BlastOutput2();
+    public BLASTResult(){
+        BlastOutput2          = new BLASTOutput2();
     }
 
     /**
      * @return the BlastOutput2
      */
-    public BlastOutput2 getBlastOutput2() {
+    public BLASTOutput2 getBlastOutput2() {
         return BlastOutput2;
     }
+    
+    
+    
+    
+    
+    /**
+     * Stringify this instance
+     * 
+     * @return 
+     */
+    @Override
+    public String toString(){
+        return "blastOutput2:\t" + BlastOutput2.toString() + "\n";
+    }
+
 }

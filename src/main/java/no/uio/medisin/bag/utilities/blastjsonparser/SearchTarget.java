@@ -10,7 +10,7 @@ package no.uio.medisin.bag.utilities.blastjsonparser;
  * @author simonray
  */
 public class SearchTarget {
-    private final String                                db                      =  "";
+    private String                                db                      =  "";
 
     /**
      * @return the db

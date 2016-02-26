@@ -9,46 +9,78 @@ package no.uio.medisin.bag.utilities.blastjsonparser;
  *
  * @author simonray
  */
-public class HighScoringSegmentPair {
+public class BLASTHighScoringSegmentPair {
     
-    private final int        num              =  0;
-    private final double     bit_score        =  0.0;
-    private final int        score            = 0;
-    private final double     evalue           = 0.0;
-    private final int        identity         = 0;
-    private final int        query_from       = 0;
-    private final int        query_to         = 0;
-    private final String     query_strand     = "";
-    private final int        hit_from         = 0;
-    private final int        hit_to           = 0;
-    private final String     hit_strand       = "";
-    private final int        align_len        = 0;
-    private final int        gaps             = 0;
-    private final String     qseq             = "";
-    private final String     hseq             = "";
-    private final String     midline          = "";
+    private int        num              =  0;
+    private double     bit_score        =  0.0;
+    private int        score            = 0;
+    private double     evalue           = 0.0;
+    private int        identity         = 0;
+    private int        query_from       = 0;
+    private int        query_to         = 0;
+    private String     query_strand     = "";
+    private int        hit_from         = 0;
+    private int        hit_to           = 0;
+    private String     hit_strand       = "";
+    private int        align_len        = 0;
+    private int        gaps             = 0;
+    private String     qseq             = "";
+    private String     hseq             = "";
+    private String     midline          = "";
+
+    
+
+    
+    /**
+     * Filter hits based on queryLen and alignLen
+     * 
+     * @param queryL
+     * @param alignL 
+     * @return boolean
+     * 
+     */
+    public Boolean filter(int queryL, int alignL){
+        return this.getAlign_len()<alignL;
+    }
 
     
     
+    
+    
+    public String filterAndReport(int queryL, int alignL){
+        if(this.getAlign_len()<alignL){
+            return Integer.toString(align_len);
+        }
+        
+        return "";
+    }
+    
+    
+    
+    /**
+     * Stringify this instance
+     * 
+     * @return 
+     */
     @Override
     public String toString(){
         return
                   "num" + this.getNum()
-                    + "bit_score" + this.getBit_Score()
-                    + "score" + this.getScore()
-                    + "evalue" + this.getEvalue()
-                    + "identity" + this.getIdentity()
-                    + "query_from" + this.getQuery_from()
-                    + "query_to" + this.getQuery_to()
-                    + "query_strand" + this.getQuery_strand()
-                    + "hit_from" + this.getHit_from()
-                    + "hit_to" + this.getHit_to()
-                    + "hit_strand" + this.getHit_strand()
-                    + "align_len" + this.getAlign_len()
-                    + "gaps" + this.getGaps()
-                    + "qseq" + this.getQseq()
-                    + "hseq" + this.getHseq()
-                    + "midline" +  this.getMidline();
+                    + "bit_score   :\t" + this.getBit_Score() + "\n"
+                    + "score       :\t" + this.getScore() + "\n"
+                    + "evalue      :\t" + this.getEvalue() + "\n"
+                    + "identity    :\t" + this.getIdentity() + "\n"
+                    + "query_from  :\t" + this.getQuery_from() + "\n"
+                    + "query_to    :\t" + this.getQuery_to() + "\n"
+                    + "query_strand:\t" + this.getQuery_strand() + "\n"
+                    + "hit_from    :\t" + this.getHit_from() + "\n"
+                    + "hit_to      :\t" + this.getHit_to() + "\n"
+                    + "hit_strand  :\t" + this.getHit_strand() + "\n"
+                    + "align_len   :\t" + this.getAlign_len() + "\n"
+                    + "gaps        :\t" + this.getGaps() + "\n"
+                    + "qseq        :\t" + this.getQseq() + "\n"
+                    + "midline     :\t" +  this.getMidline() + "\n"
+                    + "hseq        :\t" + this.getHseq();
                 }
   
     

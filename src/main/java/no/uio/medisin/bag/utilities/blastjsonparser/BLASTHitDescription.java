@@ -8,14 +8,32 @@ package no.uio.medisin.bag.utilities.blastjsonparser;
 /**
  *
  * @author simonray
+ * 
  */
-public class Description {
-    private final String     id              =  "";
-    private final String     accession       =  "";
-    private final String     title           =  "";
-    private final int        taxid           =  0;
-    private final String     sciname         =  "";
+public class BLASTHitDescription {
+    private String     id              =  "";
+    private String     accession       =  "";
+    private String     title           =  "";
+    private int        taxid           =  0;
+    private String     sciname         =  "";
 
+    
+    
+    
+    /**
+     * Stringify the instance
+     * 
+     * @return 
+     */
+    @Override
+    public String toString(){
+        return
+                "id:\t" + this.getId() + "\n"
+                + "accession:\t" + this.getAccession() + "\n"
+                + "title    :\t" + this.getTitle() + "\n"
+                + "taxID    :\t" + this.getTaxid() + "\n"
+                + "sciName  :\t" + this.getSciname();
+    }
     /**
      * @return the id
      */
