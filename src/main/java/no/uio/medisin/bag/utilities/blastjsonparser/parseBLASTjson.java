@@ -11,6 +11,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -35,12 +36,14 @@ public class parseBLASTjson {
     static Logger logger = LogManager.getRootLogger();
     static Options options = new Options();
     
-    private static BLASTResult   blastResult = new BLASTResult();
+    private static BLASTSingleResult   blastSingleResult ;
+    private static BLASTMultiResult   blastMultiResult;
     
     private static String blastFileList;
     private static int minQueryLen;
     private static int minAlignLen;
     private static String outputResultFile;
+    private static Boolean multiJson;
     
     private static ArrayList<String> blastFiles = new ArrayList<>();
     
@@ -48,7 +51,13 @@ public class parseBLASTjson {
         
 	ObjectMapper mapper = new ObjectMapper();
         mapper.setVisibility(JsonMethod.FIELD, JsonAutoDetect.Visibility.ANY);
-        parseArguments(args);
+        try{
+            parseArguments(args);        
+        }
+        catch(Exception exEx){
+            logger.error("error parsing Arguments");
+            System.exit(-1);
+        }
 
         String line ="";
         logger.info("reading Blast Results Input file <" + blastFileList + ">");
@@ -66,41 +75,131 @@ public class parseBLASTjson {
         }
 
         logger.info("parsing Blast file list");
+        
+        try{
+            if(multiJson){
+                filterMultiJsonResult();
+            }
+            else{
+                filterSingleJsonResult();
+            }
+        }
+        catch(IOException exIO){
+            logger.error("error filtering BLAST results");
+            logger.error("see log file for details");
+            logger.error(exIO.toString());
+            System.exit(-1);
+        }
+        logger.info("done");
+        
+    }
+
+    /**
+     * @return the multiJson
+     */
+    public static Boolean getMultiJson() {
+        return multiJson;
+    }
+
+    /**
+     * @param aMultiJson the multiJson to set
+     */
+    public static void setMultiJson(Boolean aMultiJson) {
+        multiJson = aMultiJson;
+    }
+    
+    
+    
+    
+    /**
+     * results are stored with multiple BLAST json queries per file
+     * @ throws IOException
+     */
+    private static void filterMultiJsonResult(){
+	ObjectMapper mapper = new ObjectMapper();
+        mapper.setVisibility(JsonMethod.FIELD, JsonAutoDetect.Visibility.ANY);
+        blastMultiResult  = new BLASTMultiResult();
+        
+        BufferedWriter bw;
         String currentBlastFile = null;
-        try(BufferedWriter bw = new BufferedWriter(new FileWriter(new File(outputResultFile)))){
+        try{
+            if(outputResultFile == null){
+                bw = new BufferedWriter(new OutputStreamWriter(System.out));
+            }else{
+                bw = new BufferedWriter(new FileWriter(new File(outputResultFile)));
+            }
+            
             for(String blastFile: blastFiles){
                 currentBlastFile = blastFile;
-                blastResult = mapper.readValue(new File(blastFile), BLASTResult.class);
-                bw.write(blastResult.getBlastOutput2().filterAndReport(minQueryLen, minAlignLen) + "\n\n");
-                //logger.info(blastResult.toString());
-                logger.info("done");
-                
+                logger.info("parsing BLAST result file <" + currentBlastFile + ">");
+                blastMultiResult = mapper.readValue(new File(blastFile), BLASTMultiResult.class);
+                logger.info("filtering results");
+                for(BLASTReport blastReport: blastMultiResult.getBlastOutput2().getReports()){
+                    logger.info("filtering " + blastReport.getParams().getQuery_id());
+                    bw.write(blastReport.filterAndReport(minQueryLen, minAlignLen) + "\n\n");
+                    logger.info("completed");                                   
+                }
             }
-            //String filename = "/data/ngsdata/sweden/msy.vs.hsa/msy.smallRNAs.count_gt_1000.1_to_10/CSR39AJG01R-Alignment.json/CSR39AJG01R_1.json";
+
             bw.close();
-            
-            logger.info(blastResult.toString());
+            logger.info("finished all files");
             
         }
         catch(IOException ex){
             logger.error("error parsing <" + currentBlastFile + ">");
             logger.error(ex.toString());
         }
-        logger.info("done");
-        
     }
     
     
     
     
-    
+    /**
+     * results are stored single BLAST query per file
+     * @ throws IOException
+     */
+    private static void filterSingleJsonResult() throws IOException{
+        
+	ObjectMapper mapper = new ObjectMapper();
+        mapper.setVisibility(JsonMethod.FIELD, JsonAutoDetect.Visibility.ANY);
+        blastSingleResult = new BLASTSingleResult();
+        
+        BufferedWriter bw;
+        String currentBlastFile = null;
+        try{
+            if(outputResultFile == null){
+                bw = new BufferedWriter(new OutputStreamWriter(System.out));
+            }else{
+                bw = new BufferedWriter(new FileWriter(new File(outputResultFile)));
+            }
+            
+            for(String blastFile: blastFiles){
+                currentBlastFile = blastFile;
+                logger.info("parsing BLAST result file <" + currentBlastFile + ">");
+                blastSingleResult = mapper.readValue(new File(blastFile), BLASTSingleResult.class);
+                logger.info("filtering results");
+                bw.write(blastSingleResult.getBlastOutput2().filterAndReport(minQueryLen, minAlignLen) + "\n\n");
+                logger.info("completed");               
+            }
+
+            bw.close();
+            logger.info("finished all files");
+                        
+        }
+        catch(IOException ex){
+            logger.error("error parsing <" + currentBlastFile + ">");
+            logger.error(ex.toString());
+        }
+        
+    }
     
     /**
      * parse out run arguments
      * 
      * @param args 
+     * @throws Exception
      */
-    public static void parseArguments(String args[]){
+    public static void parseArguments(String args[]) throws Exception{
         
         
         logger.info("parse arguments");
@@ -109,6 +208,8 @@ public class parseBLASTjson {
         options.addOption("q", "min_query_len",    true,   "min query length");
         options.addOption("a", "min_align_length",      true,   "min align length");
         options.addOption("o", "output",     true,   "output file");
+        options.addOption("M", "multi", false, "results files contain multiple BLAST results");
+        options.addOption("S", "single", false, "results files contain single BLAST result");
         
         CommandLineParser clParser = new BasicParser();
         CommandLine cmd = null;
@@ -144,11 +245,31 @@ public class parseBLASTjson {
             if (cmd.hasOption("o")) {
                 outputResultFile = cmd.getOptionValue("o");
                 logger.info("output summary file set to <" + outputResultFile + ">");
-            }                    
+            }
+            else
+                outputResultFile = null;
+            
+            if (cmd.hasOption("M") && cmd.hasOption("S")){
+                logger.error("you cannot specify both 'M' and 'S' in the parameters ");
+                throw new ParseException("you cannot specify both 'M' and 'S' in the parameters ");
+
+            }
+            if (cmd.hasOption("M")){
+                multiJson = true;
+                logger.info("BLAST result files contain multiple entries ");
+            }
+            if(cmd.hasOption("S")){
+                multiJson = false;
+                logger.info("BLAST result files contain single entries ");
+            }
             
         }
         catch(ParseException exPa){
-            
+            logger.error("Error parsing run parameters");
+            logger.error(exPa.toString());
+            throw new Exception("Run terminated unexpectedly while parsing run parameters\n"
+                    + "see log file for details"
+            );
         }
     }
     
