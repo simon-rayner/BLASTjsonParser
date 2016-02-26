@@ -17,8 +17,8 @@ public class BLASTSearchParameters {
     private String                                query_title             =  "";
     private int                                   query_len               =  0;
     private String                                num                     =  "";
-    private ArrayList<BLASTHit>                        hits;
-    private BLASTStats                                  stat;
+    private ArrayList<BLASTHit>                   hits;
+    private BLASTStats                            stat;
     
     public BLASTSearchParameters(){
         hits = new ArrayList<>();

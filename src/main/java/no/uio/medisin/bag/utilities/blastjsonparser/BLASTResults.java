@@ -30,7 +30,7 @@ public class BLASTResults {
      * 
      */
     public Boolean filter(int queryL, int alignL){       
-        return search.getQuery_len() >= queryL;
+        return getSearch().getQuery_len() >= queryL;
     }
     
     
@@ -44,12 +44,12 @@ public class BLASTResults {
      * 
      */
     public String filterAndReport(int queryL, int alignL){
-        if(search.getQuery_len() >= queryL){
-            return search.getQuery_title() + "\t" 
-                    + search.filterAndReport(queryL, alignL);
+        if(getSearch().getQuery_len() >= queryL){
+            return getSearch().getQuery_title() + "\t" 
+                    + getSearch().filterAndReport(queryL, alignL);
         }
-        return search.getQuery_title() + "\t" 
-                + "query_len = " + search.getQuery_len() 
+        return getSearch().getQuery_title() + "\t" 
+                + "query_len = " + getSearch().getQuery_len() 
                 + "(<" + queryL + ") skipping" + "\n";
     }
     
@@ -58,6 +58,13 @@ public class BLASTResults {
     
     @Override
     public String toString(){
-        return search.toString();
+        return getSearch().toString();
+    }
+
+    /**
+     * @return the search
+     */
+    public BLASTSearchParameters getSearch() {
+        return search;
     }
 }

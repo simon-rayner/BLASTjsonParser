@@ -12,11 +12,11 @@ import java.util.ArrayList;
  * @author simonray
  */
 public class BLASTOutput2Array {
-    private ArrayList<BLASTReport>                reports;
-    private String                                db                      =  "";
+    private ArrayList<BLASTOutput2>                BlastOutput2;
+//    private String                                db                      =  "";
     
     public BLASTOutput2Array(){
-        reports          = new ArrayList<>();
+        BlastOutput2          = new ArrayList<>();
     }
 
     
@@ -32,10 +32,10 @@ public class BLASTOutput2Array {
      */
     public String filterAndReport(int queryL, int alignL){
         String reportsString = "";
-        for(BLASTReport blastReport: reports){
-            String thisReportString = blastReport.filterAndReport(queryL, alignL);
+        for(BLASTOutput2 blastoutput2: BlastOutput2){
+            String thisReportString = blastoutput2.filterAndReport(queryL, alignL);
             if(thisReportString.isEmpty()==false){
-                reportsString = reportsString.concat(blastReport.toString() + "\n");
+                reportsString = reportsString.concat(blastoutput2.toString() + "\n");
                 
             }
         }
@@ -48,8 +48,8 @@ public class BLASTOutput2Array {
     /**
      * @return the report
      */
-    public ArrayList<BLASTReport> getReports() {
-        return reports;
+    public ArrayList<BLASTOutput2> getReports() {
+        return BlastOutput2;
     }
     
     
@@ -63,8 +63,8 @@ public class BLASTOutput2Array {
     @Override
     public String toString(){
         String reportsString = "";
-        for(BLASTReport blastReport: reports){
-            reportsString = reportsString.concat(blastReport.toString() + "\n");
+        for(BLASTOutput2 blastoutput2: BlastOutput2){
+            reportsString = reportsString.concat(blastoutput2.toString() + "\n");
         }
         return reportsString;
     }

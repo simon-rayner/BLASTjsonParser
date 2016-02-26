@@ -37,7 +37,8 @@ public class parseBLASTjson {
     static Options options = new Options();
     
     private static BLASTSingleResult   blastSingleResult ;
-    private static BLASTMultiResult   blastMultiResult;
+    private static BLASTOutput2Array   blastMultiResult;
+//    private static BLASTMultiResult   blastMultiResult;
     
     private static String blastFileList;
     private static int minQueryLen;
@@ -72,6 +73,7 @@ public class parseBLASTjson {
         catch(IOException exIO){
             logger.error("error reading <" + blastFiles + ">");
             logger.error(exIO.toString());
+            System.exit(-1);
         }
 
         logger.info("parsing Blast file list");
@@ -118,7 +120,9 @@ public class parseBLASTjson {
     private static void filterMultiJsonResult(){
 	ObjectMapper mapper = new ObjectMapper();
         mapper.setVisibility(JsonMethod.FIELD, JsonAutoDetect.Visibility.ANY);
-        blastMultiResult  = new BLASTMultiResult();
+        //BLASTOutput2Array
+//        blastMultiResult  = new BLASTMultiResult();
+        blastMultiResult  = new BLASTOutput2Array();
         
         BufferedWriter bw;
         String currentBlastFile = null;
@@ -132,11 +136,13 @@ public class parseBLASTjson {
             for(String blastFile: blastFiles){
                 currentBlastFile = blastFile;
                 logger.info("parsing BLAST result file <" + currentBlastFile + ">");
-                blastMultiResult = mapper.readValue(new File(blastFile), BLASTMultiResult.class);
+//                blastMultiResult = mapper.readValue(new File(blastFile), BLASTMultiResult.class);
+                blastMultiResult = mapper.readValue(new File(blastFile), BLASTOutput2Array.class);
                 logger.info("filtering results");
-                for(BLASTReport blastReport: blastMultiResult.getBlastOutput2().getReports()){
-                    logger.info("filtering " + blastReport.getParams().getQuery_id());
-                    bw.write(blastReport.filterAndReport(minQueryLen, minAlignLen) + "\n\n");
+//                for(BLASTReport blastReport: blastMultiResult.getBlastOutput2().getReports()){
+                for(BLASTOutput2 blastOutput2: blastMultiResult.getReports()){
+                    logger.info("filtering " + blastOutput2.getReport().getResults().getSearch().getQuery_title());
+                    bw.write(blastOutput2.filterAndReport(minQueryLen, minAlignLen) + "\n\n");
                     logger.info("completed");                                   
                 }
             }

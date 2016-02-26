@@ -15,10 +15,10 @@ import org.apache.commons.lang3.StringUtils;
  */
 public class BLASTHit {
     
-    private String                                num                 =  "";
-    private ArrayList<BLASTHitDescription>                description;
-    private int                                   len                 =  0;
-    private ArrayList<BLASTHighScoringSegmentPair>     hsps;
+    private String                                  num                 =  "";
+    private ArrayList<BLASTHitDescription>          description;
+    private int                                     len                 =  0;
+    private ArrayList<BLASTHighScoringSegmentPair>  hsps;
 
     
     public BLASTHit(){
