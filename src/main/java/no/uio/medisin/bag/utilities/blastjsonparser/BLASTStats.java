@@ -13,7 +13,7 @@ public class BLASTStats {
     private int                                   db_num               =  0;
     private int                                   db_len               =  0;
     private int                                   hsp_len              =  0;
-    private int                                   eff_space            =  0;
+    private long                                  eff_space            =  0;
     private double                                kappa                =  0.0;
     private double                                lambda               =  0.0;
     private double                                entropy              =  0.0;
@@ -60,7 +60,7 @@ public class BLASTStats {
     /**
      * @return the eff_space
      */
-    public int getEff_space() {
+    public long getEff_space() {
         return eff_space;
     }
 

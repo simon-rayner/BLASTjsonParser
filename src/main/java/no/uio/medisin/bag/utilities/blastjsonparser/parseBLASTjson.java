@@ -193,8 +193,8 @@ public class parseBLASTjson {
                         
         }
         catch(IOException ex){
-            logger.error("error parsing <" + currentBlastFile + ">");
-            logger.error(ex.toString());
+            logger.info("error parsing <" + currentBlastFile + ">");
+            logger.info(ex.toString());
         }
         
     }
